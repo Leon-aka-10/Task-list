@@ -45,14 +45,17 @@ class TaskController extends Controller
 
         $tasks = Task::find($id);
 
+        $request->validate([
+            'title'=>'required'
+        ]);
+
+        $tasks->update($request->all());
 
         
-      // 'title'= $request->title
+        session()->flash('msg', 'Task has been updated');
         
+        return redirect()->route('task.index');
 
-        
-        
-        //return redirect('/');
 
 
     }
@@ -63,9 +66,9 @@ class TaskController extends Controller
 
         $tasks = Task::find($id);
 
-        return view('tasks.edit', compact('tasks'));
+       // return view('tasks.edit', compact('tasks'));
 
-        
+        return view('tasks.edit')->with('taskUnderEdit', $tasks);
 
     }
 
